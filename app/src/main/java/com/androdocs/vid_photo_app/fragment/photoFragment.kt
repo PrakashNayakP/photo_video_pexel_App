@@ -1,5 +1,6 @@
 package com.androdocs.vid_photo_app.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.androdocs.vid_photo_app.api.retrofitClient
 import com.androdocs.vid_photo_app.R
 import com.androdocs.vid_photo_app.adapter.photoAdapter
 import com.androdocs.vid_photo_app.databinding.PhotoListBinding
+import com.androdocs.vid_photo_app.detailsPhoto
 import com.androdocs.vid_photo_app.models.photoresponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,7 +52,10 @@ class photoFragment : Fragment() {
                     binding.recyclerView1.apply {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
-                        adapter = photoAdapter(photoresponse.photos)
+                        adapter = photoAdapter(photoresponse.photos){
+                            val intent = Intent (getActivity(), detailsPhoto::class.java)
+                            getActivity()?.startActivity(intent)
+                        }
                     }
                 }
                 else{

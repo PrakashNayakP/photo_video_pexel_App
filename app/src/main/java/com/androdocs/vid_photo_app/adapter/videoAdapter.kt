@@ -32,7 +32,8 @@ class videoAdapter(private  val videolist:List<Video>):RecyclerView.Adapter<vide
         val photographername=binding.photographername
         fun bind(video: Video) {
             Picasso.get().load(video.image).into(photourl);
-            Picasso.get().load(video.user.url).into(photographer);
+//            Picasso.get().load(video.user.url).into(photographer);
+            Picasso.get().load(video.image).into(photographer);
             photographername.text=video.user.name
 
         }
