@@ -10,7 +10,7 @@ import com.androdocs.vid_photo_app.models.Photo
 import com.squareup.picasso.Picasso
 
 
-class photoAdapter(private val photolist:List<Photo>, val listner:(String)->Unit) : RecyclerView.Adapter<photoAdapter.ViewHolder>() {
+class photoAdapter(private val photolist:List<Photo>, val listner:(Photo)->Unit) : RecyclerView.Adapter<photoAdapter.ViewHolder>() {
 
 
 
@@ -34,12 +34,12 @@ class photoAdapter(private val photolist:List<Photo>, val listner:(String)->Unit
         val photourl=binding.photo
         val photographer=binding.photographer
         val photographername=binding.photographername
-        fun bind(photo: Photo,listner:(String)->Unit) {
+        fun bind(photo: Photo,listner:(Photo)->Unit) {
             Picasso.get().load(photo.src.landscape).into(photourl);
 //            Picasso.get().load(photo.photographer_url).into(photographer);
             Picasso.get().load(photo.src.tiny).into(photographer);
             photographername.text=photo.photographer
-            itemView.setOnClickListener{listner(photo.src.landscape)}
+            itemView.setOnClickListener{listner(photo)}
 
         }
 

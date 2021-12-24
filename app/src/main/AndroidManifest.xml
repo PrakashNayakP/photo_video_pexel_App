@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vid_photo_app">
         <activity
+            android:name=".detailsVideo"
+            android:exported="true" />
+        <activity
             android:name=".detailsPhoto"
             android:exported="true" />
         <activity

@@ -23,6 +23,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class photoFragment : Fragment() {
+    companion object{
+        const val photodet="detailed photo"
+    }
+
     // TODO: Rename and change types of parameters
     private var _binding: FragmentPhotoBinding? = null
     // This property is only valid between onCreateView and
@@ -54,6 +58,7 @@ class photoFragment : Fragment() {
                         layoutManager = GridLayoutManager(activity,1)
                         adapter = photoAdapter(photoresponse.photos){
                             val intent = Intent (getActivity(), detailsPhoto::class.java)
+                            intent.putExtra(photodet,it)
                             getActivity()?.startActivity(intent)
                         }
                     }

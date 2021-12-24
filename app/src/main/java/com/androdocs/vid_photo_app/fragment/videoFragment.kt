@@ -1,5 +1,6 @@
 package com.androdocs.vid_photo_app.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import com.androdocs.vid_photo_app.R
 import com.androdocs.vid_photo_app.adapter.videoAdapter
 import com.androdocs.vid_photo_app.api.retrofitClient
 import com.androdocs.vid_photo_app.databinding.FragmentVideoBinding
+import com.androdocs.vid_photo_app.detailsPhoto
+import com.androdocs.vid_photo_app.detailsVideo
 import com.androdocs.vid_photo_app.models.photoresponse
 import com.androdocs.vid_photo_app.models.videoresponse
 import retrofit2.Call
@@ -22,6 +25,12 @@ import retrofit2.Response
 
 
 class videoFragment : Fragment() {
+
+    companion object{
+        const val videodet="detailed video"
+        const val videolink="link of video"
+    }
+
     private var _binding: FragmentVideoBinding? = null
 
     private val binding get() = _binding!!
@@ -50,7 +59,11 @@ class videoFragment : Fragment() {
                     binding.recyclerView2.apply {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
-                        adapter = videoAdapter(videoresponse.videos)
+                        adapter = videoAdapter(videoresponse.videos){
+                            val intent = Intent (getActivity(), detailsVideo::class.java)
+                            intent.putExtra(videodet,it)
+                            getActivity()?.startActivity(intent)
+                        }
                     }
                 }
                 else{
