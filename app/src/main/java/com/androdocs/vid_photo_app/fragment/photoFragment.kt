@@ -10,19 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.androdocs.vid_photo_app.databinding.FragmentPhotoBinding
 import com.androdocs.vid_photo_app.api.retrofitClient
 import com.androdocs.vid_photo_app.R
 import com.androdocs.vid_photo_app.adapter.photoAdapter
+import com.androdocs.vid_photo_app.adapter.videoAdapter
 import com.androdocs.vid_photo_app.databinding.PhotoListBinding
-import com.androdocs.vid_photo_app.detailsPhoto
+import com.androdocs.vid_photo_app.models.Photo
+import com.androdocs.vid_photo_app.models.Video
+import com.androdocs.vid_photo_app.ui.detailsPhoto
 import com.androdocs.vid_photo_app.models.photoresponse
+import com.androdocs.vid_photo_app.roomdb.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class photoFragment : Fragment() {
+class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
+
+    lateinit var viewModel: FavoriteViewModal
+
     companion object{
         const val photodet="detailed photo"
     }
@@ -33,10 +41,14 @@ class photoFragment : Fragment() {
 // onDestroyView.
     private val binding get() = _binding!!
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         // Inflate the layout for this fragment
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
         val view= binding.root
@@ -46,7 +58,8 @@ class photoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val call= retrofitClient.instance.getPexelsImage()
+//        val call= retrofitClient.instance.getPexelsImage()
+        val call= retrofitClient.instance.getSearchImage(query)
         call.enqueue(object : Callback<photoresponse> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<photoresponse>, response: Response<photoresponse>) {
@@ -56,11 +69,7 @@ class photoFragment : Fragment() {
                     binding.recyclerView1.apply {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
-                        adapter = photoAdapter(photoresponse.photos){
-                            val intent = Intent (getActivity(), detailsPhoto::class.java)
-                            intent.putExtra(photodet,it)
-                            getActivity()?.startActivity(intent)
-                        }
+                        adapter = photoAdapter(photoresponse.photos,this@photoFragment)
                     }
                 }
                 else{
@@ -75,5 +84,23 @@ class photoFragment : Fragment() {
             }
         })
     }
+
+
+    override fun onItemClick(photo: Photo) {
+
+        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
+        val repository = FavoriteRepository(dao)
+        val factory = FavoriteViewModalFactory(repository)
+        viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
+
+        val image:String=photo.src.landscape
+        val name:String=photo.photographer
+        val link:String=photo.src.large
+        val desc:String=photo.alt
+        val favorites= Favorite(link,name,true,image,desc)
+        viewModel.addFavorite(favorites)
+        Log.d("Sucess","added sucessfully"+favorites)
+
+    }
+
 }
-//

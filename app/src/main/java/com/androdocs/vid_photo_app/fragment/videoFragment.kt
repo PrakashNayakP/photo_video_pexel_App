@@ -1,5 +1,6 @@
 package com.androdocs.vid_photo_app.fragment
 
+import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,27 +11,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.androdocs.vid_photo_app.R
 import com.androdocs.vid_photo_app.adapter.videoAdapter
 import com.androdocs.vid_photo_app.api.retrofitClient
 import com.androdocs.vid_photo_app.databinding.FragmentVideoBinding
-import com.androdocs.vid_photo_app.detailsPhoto
-import com.androdocs.vid_photo_app.detailsVideo
-import com.androdocs.vid_photo_app.models.photoresponse
+import com.androdocs.vid_photo_app.models.Video
+import com.androdocs.vid_photo_app.ui.detailsVideo
 import com.androdocs.vid_photo_app.models.videoresponse
+import com.androdocs.vid_photo_app.roomdb.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class videoFragment : Fragment() {
+class videoFragment : Fragment(),videoAdapter.onclickicon {
 
-    companion object{
-        const val videodet="detailed video"
-        const val videolink="link of video"
-    }
+//    companion object{
+//        const val videodet="detailed video"
+//        const val videolink="link of video"
+//    }
 
+
+    lateinit var viewModel: FavoriteViewModal
     private var _binding: FragmentVideoBinding? = null
 
     private val binding get() = _binding!!
@@ -59,11 +62,17 @@ class videoFragment : Fragment() {
                     binding.recyclerView2.apply {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
-                        adapter = videoAdapter(videoresponse.videos){
-                            val intent = Intent (getActivity(), detailsVideo::class.java)
-                            intent.putExtra(videodet,it)
-                            getActivity()?.startActivity(intent)
-                        }
+                        adapter = videoAdapter(videoresponse.videos,this@videoFragment)
+
+
+
+
+
+//                        {
+//                            val intent = Intent (getActivity(), detailsVideo::class.java)
+//                            intent.putExtra(videodet,it)
+//                            getActivity()?.startActivity(intent)
+//                        }
                     }
                 }
                 else{
@@ -77,6 +86,34 @@ class videoFragment : Fragment() {
                 Toast.makeText(activity,"Something wrong", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onItemClick(video: Video) {
+
+
+//        val favoriteRepository = FavoriteRepository(FavoriteDatabase(requireContext()))
+//        val factory = FavoriteViewModalFactory(favoriteRepository)
+//        viewModel = ViewModelProvider(this, factory).get(FavoriteViewModal::class.java)
+
+
+
+        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
+        val repository = FavoriteRepository(dao)
+        val factory = FavoriteViewModalFactory(repository)
+        viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
+
+
+
+
+
+        val image:String=video.image
+        val name:String=video.user.name
+        val link:String=video.video_files[1].link
+        val desc:String=video.user.name
+        val favorites= Favorite(link,name,true,image,desc)
+        viewModel.addFavorite(favorites)
+        Log.d("Sucess","added sucessfully"+favorites)
+
     }
 
 
