@@ -1,6 +1,7 @@
 package com.androdocs.vid_photo_app.roomdb
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class FavoriteViewModal(private val repository: FavoriteRepository): ViewModel()
     }
 
     fun addFavorite(favorite: Favorite) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("Success", "in view model")
         repository.insert(favorite)
     }
 

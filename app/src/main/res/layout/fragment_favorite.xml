@@ -7,10 +7,14 @@
     tools:context=".fragment.favoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ImageView
+        android:id="@+id/noData"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:src="@drawable/dummy_image"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

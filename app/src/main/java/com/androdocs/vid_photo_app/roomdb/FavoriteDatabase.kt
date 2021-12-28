@@ -1,6 +1,7 @@
 package com.androdocs.vid_photo_app.roomdb
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -40,6 +41,7 @@ abstract class FavoriteDatabase:RoomDatabase() {
                         "favorite_database"
                     ).build()
                 }
+                Log.d("Success", "returning database instance")
                 return instance
             }
         }

@@ -97,9 +97,9 @@ class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
         val name:String=photo.photographer
         val link:String=photo.src.large
         val desc:String=photo.alt
-        val favorites= Favorite(link,name,true,image,desc)
+        val favorites= Favorite(1,link,name,true,image,desc)
         viewModel.addFavorite(favorites)
-        Log.d("Sucess","added sucessfully"+favorites)
+        Log.d("Success", "added successfully$favorites")
 
     }
 

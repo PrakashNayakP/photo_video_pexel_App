@@ -110,7 +110,7 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
         val name:String=video.user.name
         val link:String=video.video_files[1].link
         val desc:String=video.user.name
-        val favorites= Favorite(link,name,true,image,desc)
+        val favorites= Favorite(2,link,name,true,image,desc)
         viewModel.addFavorite(favorites)
         Log.d("Sucess","added sucessfully"+favorites)
 
