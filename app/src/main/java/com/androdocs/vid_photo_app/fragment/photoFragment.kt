@@ -6,17 +6,22 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.androdocs.vid_photo_app.MainActivity
 import com.androdocs.vid_photo_app.databinding.FragmentPhotoBinding
 import com.androdocs.vid_photo_app.api.retrofitClient
 import com.androdocs.vid_photo_app.R
+import com.androdocs.vid_photo_app.adapter.favoriteAdapter
 import com.androdocs.vid_photo_app.adapter.photoAdapter
 import com.androdocs.vid_photo_app.adapter.videoAdapter
+import com.androdocs.vid_photo_app.databinding.FragmentFavoriteBinding
 import com.androdocs.vid_photo_app.databinding.PhotoListBinding
 import com.androdocs.vid_photo_app.models.Photo
 import com.androdocs.vid_photo_app.models.Video
@@ -27,19 +32,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
 
-    lateinit var viewModel: FavoriteViewModal
 
-    companion object{
-        const val photodet="detailed photo"
-    }
+
+
+class photoFragment(private val query:String) : Fragment(), photoAdapter.onclickicon {
+
 
     // TODO: Rename and change types of parameters
     private var _binding: FragmentPhotoBinding? = null
+//    private var _favBinding: FragmentFavoriteBinding? =null
+
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
+//    private val favBinding get() = _favBinding!!
+
+
 
 
 
@@ -51,14 +60,17 @@ class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
 
         // Inflate the layout for this fragment
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
+//        _favBinding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val view= binding.root
+
+
         return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val call= retrofitClient.instance.getPexelsImage()
         val call= retrofitClient.instance.getSearchImage(query)
         call.enqueue(object : Callback<photoresponse> {
             @RequiresApi(Build.VERSION_CODES.O)
@@ -69,7 +81,9 @@ class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
                     binding.recyclerView1.apply {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
+
                         adapter = photoAdapter(photoresponse.photos,this@photoFragment)
+                        binding.emptyView.visibility=View.GONE
                     }
                 }
                 else{
@@ -86,21 +100,39 @@ class photoFragment(val query:String) : Fragment(), photoAdapter.onclickicon {
     }
 
 
-    override fun onItemClick(photo: Photo) {
+    override fun onItemClick(photo: Photo,isFav:Boolean) {
 
         val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
         val repository = FavoriteRepository(dao)
         val factory = FavoriteViewModalFactory(repository)
-        viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
+        val viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
 
-        val image:String=photo.src.landscape
-        val name:String=photo.photographer
         val link:String=photo.src.large
-        val desc:String=photo.alt
-        val favorites= Favorite(1,link,name,true,image,desc)
-        viewModel.addFavorite(favorites)
-        Log.d("Success", "added successfully$favorites")
+            val name: String = photo.photographer
+            val image: String = photo.src.landscape
+            val desc: String = photo.alt
+            val favorites = Favorite(link, name, true, image, desc)
+        if(!isFav) {
+            viewModel.addFavorite(favorites)
+            Log.d("Success", "added successfully$favorites")
+        }
+        else{
+            viewModel.deleteFavorite(favorites)
+            Log.d("Success", "deleted successfully$favorites")
+        }
+
 
     }
+
+    override fun isInDatabase(url: String): Boolean {
+        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
+        val repository = FavoriteRepository(dao)
+        val factory = FavoriteViewModalFactory(repository)
+        val viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
+        viewModel.isRecordExists(url)
+        return viewModel.isThere
+    }
+
+
 
 }

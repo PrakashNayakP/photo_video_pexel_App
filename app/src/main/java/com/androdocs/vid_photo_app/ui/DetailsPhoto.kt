@@ -2,17 +2,9 @@ package com.androdocs.vid_photo_app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import com.androdocs.vid_photo_app.databinding.ActivityDetailsPhotoBinding
-import com.androdocs.vid_photo_app.fragment.photoFragment
-import com.androdocs.vid_photo_app.models.Photo
-
-
 import com.squareup.picasso.Picasso
-import android.app.PendingIntent.getActivity
-import android.view.View
-import androidx.core.view.get
 import com.androdocs.vid_photo_app.R
 
 
@@ -23,6 +15,7 @@ class detailsPhoto : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Vid_photo_app)
 
         //inflating binding
         binding= ActivityDetailsPhotoBinding.inflate(layoutInflater)
@@ -31,7 +24,7 @@ class detailsPhoto : AppCompatActivity() {
         setContentView(binding.root)
 
         //hiding toolbar
-        getSupportActionBar()?.hide()
+        supportActionBar?.hide()
 
 
         val image = intent.getStringArrayListExtra("array")
@@ -48,7 +41,7 @@ class detailsPhoto : AppCompatActivity() {
         binding.photographername.text=image[3]
 
 
-        binding.zoomin.setOnClickListener(){
+        binding.zoomin.setOnClickListener{
             val animZoomIn = AnimationUtils.loadAnimation(this,
                 R.anim.zoom_in
             )

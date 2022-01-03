@@ -19,67 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-<!--    <FrameLayout-->
-
-<!--        android:id="@+id/framelayout1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tab"-->
-<!--        app:layout_constraintVertical_bias="0.0" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/phototv"-->
-<!--        android:layout_width="135dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="3dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Photos"-->
-<!--        android:textSize="14dp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/videotv"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/videotv"-->
-<!--        android:layout_width="136dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Videos"-->
-<!--        android:textSize="14dp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/favtv"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/phototv"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/favtv"-->
-<!--        android:layout_width="136dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="3dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Favorites"-->
-<!--        android:textSize="14dp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/videotv"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
 
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
+        app:tabIndicatorFullWidth="false"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        app:tabSelectedTextColor="#ff0000"
+        android:background="@drawable/tablayout_bg"
+        app:tabIndicatorColor="#ff0000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -94,16 +44,6 @@
 
         tools:ignore="SpeakableTextPresentCheck"
         />
-
-
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:id="@+id/viewpager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tablayout"-->
-
-<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
 
     <ImageView
@@ -125,12 +65,13 @@
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:lineSpacingMultiplier="1.17"
-        android:text="Discover the world’s best photos and videos"
+        android:text="@string/main_det"
         android:textColor="#FFFFFF"
         android:textSize="24dp"
         android:textStyle="bold"
@@ -138,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.363" />
 
     <TextView
@@ -158,71 +99,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6"
         app:layout_constraintVertical_bias="0.0" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/editTextTextPersonName"-->
-<!--        android:background="@drawable/search_style"-->
-<!--        android:layout_width="208dp"-->
-<!--        android:layout_height="16dp"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:fontFamily="sans-serif"-->
-<!--        android:hint="Search photos, videos, artists"-->
-<!--        android:textColor="#37474F"-->
-<!--        android:textSize="14dp"-->
-<!--        android:text="Search photos, videos, artists"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/imageView"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/imageView"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView5" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/search"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:layout_margin="5dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:background="@drawable/search_style"-->
-<!--        android:drawableLeft="@drawable/ic_baseline_search_24"-->
-<!--        android:ems="10"-->
-<!--        android:fontFamily="sans-serif"-->
-<!--        android:gravity="left"-->
-<!--        android:hint="Search photos, videos, artists"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:textColor="#37474F"-->
-<!--        android:textSize="18dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/imageView"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/imageView"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView5"-->
-
-<!--        />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/searchiv"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/search"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/search"-->
-<!--        app:layout_constraintHorizontal_bias="0.028"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/search"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/search"-->
-<!--        app:layout_constraintVertical_bias="0.541"-->
-<!--        app:srcCompat="@drawable/ic_baseline_search_24" />-->
-
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="360dp"
+        android:layout_height="48dp"
+        android:iconifiedByDefault="false"
+        android:layout_marginLeft="20px"
+        app:defaultQueryHint="Search photos, videos, artists"
+        app:iconifiedByDefault="false"
+        android:layout_marginRight="20px"
+        android:background="@drawable/search_style"
         android:elevation="1dp"
-        android:queryHint="Search photos, videos, artists"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.209" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

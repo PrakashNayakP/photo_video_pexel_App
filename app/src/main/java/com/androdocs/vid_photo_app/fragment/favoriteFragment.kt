@@ -7,9 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androdocs.vid_photo_app.MainActivity
 import com.androdocs.vid_photo_app.R
 import com.androdocs.vid_photo_app.adapter.favoriteAdapter
 import com.androdocs.vid_photo_app.databinding.FragmentFavoriteBinding
@@ -21,7 +26,6 @@ class favoriteFragment : Fragment() {
 
     private lateinit var favoriteViewModel: FavoriteViewModal
     private lateinit var favoriteRecyclerViewAdapter: favoriteAdapter
-    private lateinit var favrv: RecyclerView
 
     private var _binding : FragmentFavoriteBinding? =null
     private var favourites = ArrayList<Favorite>()
@@ -34,47 +38,40 @@ class favoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
-        val repository = FavoriteRepository(dao)
-        val factory = FavoriteViewModalFactory(repository)
-        favoriteViewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
-
-        setRecyclerView()
-
-
-
-//        binding.removeFavourite.setOnClickListener {
-//            MaterialAlertDialogBuilder(requireContext())
-//                .setTitle("Are you sure want to remove all the favourites?")
-//                .setNegativeButton("NO") { _, _ ->
-//                    // Respond to negative button press
-//                }
-//                .setPositiveButton("YES") { _, _ ->
-//                    favoriteViewModel.clearAllFavourites()
-//                }
-//                .show()
-//
-//        }
-
         return binding.root
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private fun setRecyclerView() {
+        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
+        val repository = FavoriteRepository(dao)
+        val factory = FavoriteViewModalFactory(repository)
+        favoriteViewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
         favoriteViewModel.allfavorites.observe(viewLifecycleOwner,{
             if (it.isNotEmpty()){
                 favourites = it as ArrayList<Favorite>
-                binding.noData.visibility = View.GONE
-                favoriteRecyclerViewAdapter = favoriteAdapter(it)
-                binding.favrv.adapter = favoriteRecyclerViewAdapter
+                binding.favrv.apply {
+                    setHasFixedSize(true)
+                    binding.noData.visibility = View.GONE
+                    favoriteRecyclerViewAdapter = favoriteAdapter(it)
+                    adapter = favoriteRecyclerViewAdapter
+                    binding.favrv.layoutManager = LinearLayoutManager(context)
+                }
+
                 Log.d("data", "$favourites")
             }else{
                 binding.noData.visibility = View.VISIBLE
                 Log.d("data", "empty")
             }
         })
+
+
+
     }
 
 
+
 }
+

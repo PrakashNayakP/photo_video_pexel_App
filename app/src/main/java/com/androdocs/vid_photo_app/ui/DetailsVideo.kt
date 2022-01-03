@@ -1,5 +1,6 @@
 package com.androdocs.vid_photo_app.ui
 
+import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,7 @@ class detailsVideo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Vid_photo_app)
         //inflating binding
         binding = ActivityDetailsVideoBinding.inflate(layoutInflater)
 
@@ -87,6 +89,25 @@ class detailsVideo : AppCompatActivity() {
 
 
         }
+
+        // reference to change the orientation on every click
+        var isPortrait = true
+
+        // Button action on click
+        binding.maximize.setOnClickListener {
+            // if isPortrait true, change to Landscape
+            requestedOrientation = if (isPortrait) {
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                // else change to Portrait
+            } else {
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+
+            // opposite the value of isPortrait
+            isPortrait = !isPortrait
+        }
+
+
     }
 
 

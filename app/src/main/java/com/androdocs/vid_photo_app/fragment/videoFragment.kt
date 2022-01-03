@@ -63,10 +63,7 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
                         setHasFixedSize(true)
                         layoutManager = GridLayoutManager(activity,1)
                         adapter = videoAdapter(videoresponse.videos,this@videoFragment)
-
-
-
-
+                        binding.emptyView.visibility=View.GONE
 
 //                        {
 //                            val intent = Intent (getActivity(), detailsVideo::class.java)
@@ -76,7 +73,7 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
                     }
                 }
                 else{
-                    val videoresponse: videoresponse = response.body()!!
+//                    val videoresponse: videoresponse = rsesponse.body()!!
                     Log.d("value","error")
                 }
             }
@@ -101,19 +98,13 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
         val repository = FavoriteRepository(dao)
         val factory = FavoriteViewModalFactory(repository)
         viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
-
-
-
-
-
-        val image:String=video.image
-        val name:String=video.user.name
         val link:String=video.video_files[1].link
+        val name:String=video.user.name
+        val image:String=video.image
         val desc:String=video.user.name
-        val favorites= Favorite(2,link,name,true,image,desc)
+        val favorites= Favorite(link,name,true,image,desc)
         viewModel.addFavorite(favorites)
-        Log.d("Sucess","added sucessfully"+favorites)
-
+        Log.d("Success", "added successfully$favorites")
     }
 
 

@@ -12,5 +12,19 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+
+    <style name="splashScreenStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
+      <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/dark_blue</item>
+    </style>
+
+
+    <style name="roundedImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

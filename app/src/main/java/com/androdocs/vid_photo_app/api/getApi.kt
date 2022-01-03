@@ -8,9 +8,9 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface getApi {
-    @Headers("Authorization: 563492ad6f9170000100000199e3f6569cde4fbb9554b208b8b77359")
-    @GET("/v1/curated?page=2&per_page=40")
-    fun getPexelsImage(): Call<photoresponse>
+//    @Headers("Authorization: 563492ad6f9170000100000199e3f6569cde4fbb9554b208b8b77359")
+//    @GET("/v1/curated?page=2&per_page=40")
+//    fun getPexelsImage(): Call<photoresponse>
 
 
     @Headers("Authorization: 563492ad6f9170000100000199e3f6569cde4fbb9554b208b8b77359")

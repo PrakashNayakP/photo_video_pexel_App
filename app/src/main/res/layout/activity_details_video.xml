@@ -110,7 +110,7 @@
         android:progressTint="#FF0000"
         android:thumbTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/maximize"
         app:layout_constraintHorizontal_bias="0.413"
         app:layout_constraintStart_toEndOf="@+id/playpause"
         app:layout_constraintTop_toBottomOf="@+id/videoView"
@@ -128,7 +128,7 @@
         app:srcCompat="@drawable/pause" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/maximize"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="28dp"

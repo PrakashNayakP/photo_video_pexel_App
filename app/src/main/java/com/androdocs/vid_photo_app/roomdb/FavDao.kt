@@ -16,4 +16,7 @@ interface FavDao {
 
     @Query(value = "Select * from FavTable order by id ASC")
     fun getAllNote(): LiveData<List<Favorite>>
+
+    @Query("SELECT EXISTS(SELECT * FROM FavTable WHERE url = :url)")
+    fun isRecordExists(url: String?): Boolean
 }

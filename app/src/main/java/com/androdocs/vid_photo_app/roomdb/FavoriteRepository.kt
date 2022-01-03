@@ -7,11 +7,13 @@ class FavoriteRepository(private val favDao: FavDao){
     val allNotes: LiveData<List<Favorite>> = favDao.getAllNote()
 
     suspend fun  insert(favorite:Favorite){
-        Log.d("Success", "in repository")
         favDao.insert(favorite)
     }
 
     suspend fun delete(favorite: Favorite){
         favDao.delete(favorite)
     }
+
+    suspend fun isRecordExists(url: String?)=favDao.isRecordExists(url)
+
 }
