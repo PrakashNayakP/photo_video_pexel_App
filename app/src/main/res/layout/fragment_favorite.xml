@@ -9,13 +9,25 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
+<!--    <TextView-->
+<!--        android:id="@+id/noData"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--       android:text="Empty"-->
+<!--        />-->
+
+    <TextView
         android:id="@+id/noData"
-        android:visibility="gone"
         android:layout_width="match_parent"
+        android:textSize="30dp"
+        android:layout_gravity="center"
         android:layout_height="match_parent"
-        android:src="@drawable/dummy_image"
-        />
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:text="Empty" />
 
 
     <androidx.recyclerview.widget.RecyclerView

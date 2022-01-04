@@ -1,7 +1,9 @@
 package com.androdocs.vid_photo_app.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.androdocs.vid_photo_app.R
@@ -34,22 +36,28 @@ class videoAdapter(private  val videolist:List<Video>,val listner:onclickicon):R
         val photourl=binding.photo
         val photographer=binding.photographer
         val photographername=binding.photographername
-        val fav=binding.faviv
         val click=binding.root
+        val unfav=binding.unfav
+        val fav=binding.faviv
 
 
         fun bind(video: Video,listner:onclickicon) {
             Picasso.get().load(video.image).into(photourl);
-//            Picasso.get().load(video.user.url).into(photographer);
             Picasso.get().load(video.image).into(photographer);
             photographername.text=video.user.name
-//            val str:String=video.user.name
 
-            //----------------------------------------------
+            if(listner.isInDatabase(video.video_files[1].link)){
+                Log.d("if", "indatabase")
+                fav.visibility=View.VISIBLE
+                unfav.visibility=View.GONE
+            }else{
+                fav.visibility=View.GONE
+                unfav.visibility=View.VISIBLE
+            }
 
             val arrayList: ArrayList<String> = ArrayList()
             arrayList.add(video.image)
-            arrayList.add(video.user.url)
+//            arrayList.add(video.user.url)
             arrayList.add(video.user.name)
             arrayList.add(video.video_files[1].link)
             val intent = Intent(click.context, detailsVideo::class.java)
@@ -57,15 +65,26 @@ class videoAdapter(private  val videolist:List<Video>,val listner:onclickicon):R
                 intent.putExtra("array",arrayList)
                 click.context.startActivity(intent)
             }
-            fav.setOnClickListener {
-                listner.onItemClick(video)
-                fav.setBackgroundResource(R.drawable.favemoji2)
+
+            //when user adds to the favorite list
+            var isFav: Boolean
+            unfav.setOnClickListener {
+                isFav=false
+                listner.onItemClick(video,isFav)
+
+                unfav.visibility= View.GONE
+                fav.visibility= View.VISIBLE
+            }
+
+            //when he unchecks the heart
+            fav.setOnClickListener{
+                isFav=true
+                listner.onItemClick(video,isFav)
+                fav.visibility= View.GONE
+                unfav.visibility= View.VISIBLE
             }
 
 
-//            click.setOnClickListener{
-//                listner(video)
-//            }
 
         }
 
@@ -74,7 +93,8 @@ class videoAdapter(private  val videolist:List<Video>,val listner:onclickicon):R
 
 
     interface onclickicon{
-        fun onItemClick(video: Video)
+        fun onItemClick(video: Video,isFav:Boolean)
+        fun isInDatabase(url:String):Boolean
     }
 
 

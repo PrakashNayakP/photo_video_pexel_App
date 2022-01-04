@@ -14,6 +14,4 @@ class FavoriteRepository(private val favDao: FavDao){
         favDao.delete(favorite)
     }
 
-    suspend fun isRecordExists(url: String?)=favDao.isRecordExists(url)
-
 }

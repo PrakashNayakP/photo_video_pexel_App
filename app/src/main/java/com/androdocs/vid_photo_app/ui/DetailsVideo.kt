@@ -55,14 +55,14 @@ class detailsVideo : AppCompatActivity() {
 //        val video=intent.getParcelableExtra<Video>("videodet")
         val intent = intent
         val video = intent.getStringArrayListExtra("array")
-        binding.videoDet.text = video!![2]
+        binding.videoDet.text = video!![1]
         Picasso.get().load(video[0]).into(binding.photographer)
-        binding.photographername.text=video!![2]
+        binding.photographername.text=video!![1]
 
 //        controlVideo(video[3])
 
         var simpleVideoView: VideoView = binding.videoView
-        simpleVideoView.setVideoPath(video[3])
+        simpleVideoView.setVideoPath(video[2])
 //        val mediaController : MediaController
 //        mediaController = MediaController(this)
 //        mediaController.setAnchorView(videoView)

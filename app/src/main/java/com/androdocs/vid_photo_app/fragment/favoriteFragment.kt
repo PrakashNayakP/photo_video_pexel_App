@@ -22,7 +22,7 @@ import com.androdocs.vid_photo_app.roomdb.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class favoriteFragment : Fragment() {
+class favoriteFragment : Fragment(),favoriteAdapter.onclickicon {
 
     private lateinit var favoriteViewModel: FavoriteViewModal
     private lateinit var favoriteRecyclerViewAdapter: favoriteAdapter
@@ -55,7 +55,7 @@ class favoriteFragment : Fragment() {
                 binding.favrv.apply {
                     setHasFixedSize(true)
                     binding.noData.visibility = View.GONE
-                    favoriteRecyclerViewAdapter = favoriteAdapter(it)
+                    favoriteRecyclerViewAdapter = favoriteAdapter(it,this@favoriteFragment)
                     adapter = favoriteRecyclerViewAdapter
                     binding.favrv.layoutManager = LinearLayoutManager(context)
                 }
@@ -71,6 +71,10 @@ class favoriteFragment : Fragment() {
 
     }
 
+    override fun onFavClick(favorite: Favorite) {
+        Log.d("delete", "deleted")
+        favoriteViewModel.deleteFavorite(favorite)
+    }
 
 
 }

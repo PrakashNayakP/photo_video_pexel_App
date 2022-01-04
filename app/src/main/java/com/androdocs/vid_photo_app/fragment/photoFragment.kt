@@ -31,6 +31,13 @@ import com.androdocs.vid_photo_app.roomdb.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.app.Activity
+import android.content.Context
+
+import android.content.SharedPreferences
+
+
+
 
 
 
@@ -38,7 +45,7 @@ import retrofit2.Response
 
 class photoFragment(private val query:String) : Fragment(), photoAdapter.onclickicon {
 
-
+     private var isInRoom = arrayListOf<String>()
     // TODO: Rename and change types of parameters
     private var _binding: FragmentPhotoBinding? = null
 //    private var _favBinding: FragmentFavoriteBinding? =null
@@ -56,6 +63,7 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
 
         // Inflate the layout for this fragment
@@ -106,7 +114,6 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
         val repository = FavoriteRepository(dao)
         val factory = FavoriteViewModalFactory(repository)
         val viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
-
         val link:String=photo.src.large
             val name: String = photo.photographer
             val image: String = photo.src.landscape
@@ -114,24 +121,44 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
             val favorites = Favorite(link, name, true, image, desc)
         if(!isFav) {
             viewModel.addFavorite(favorites)
-            Log.d("Success", "added successfully$favorites")
+            isInRoom.add(link)
+            val isSaved=saveArray()
+            Log.d("Saved:$isSaved", "added successfully$isInRoom")
         }
         else{
             viewModel.deleteFavorite(favorites)
-            Log.d("Success", "deleted successfully$favorites")
+            isInRoom.remove(link)
+             val isSaved=saveArray()
+            Log.d("Saved:$isSaved", "deleted successfully$isInRoom")
+
         }
 
 
     }
 
     override fun isInDatabase(url: String): Boolean {
-        val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
-        val repository = FavoriteRepository(dao)
-        val factory = FavoriteViewModalFactory(repository)
-        val viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
-        viewModel.isRecordExists(url)
-        return viewModel.isThere
+         isInRoom=getArray()
+        Log.d("checking", "$url is in array ${isInRoom!!.contains(url)}")
+        return isInRoom!!.contains(url)
     }
+
+
+    fun saveArray(): Boolean {
+        val sp = this.requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val mEdit1 = sp.edit()
+        val set: MutableSet<String> = HashSet()
+        set.addAll(isInRoom)
+        mEdit1.putStringSet("list", set)
+        return mEdit1.commit()
+    }
+
+    private fun getArray(): ArrayList<String> {
+        val sp = this.requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+        //NOTE: if shared preference is null, the method return empty Hashset and not null
+        val set = sp.getStringSet("list", HashSet())
+        return ArrayList(set)
+    }
+
 
 
 

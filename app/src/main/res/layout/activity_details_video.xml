@@ -22,7 +22,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:background="#575356"
+        android:background="@drawable/details_photo_toolbar"
         android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
         android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#969395"
+        android:background="@drawable/image_details_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

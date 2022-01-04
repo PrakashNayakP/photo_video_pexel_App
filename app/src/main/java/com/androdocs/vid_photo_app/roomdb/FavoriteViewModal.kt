@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class FavoriteViewModal(private val repository: FavoriteRepository): ViewModel() {
 
        var allfavorites = repository.allNotes
-        var isThere=false
 
 
     fun deleteFavorite (favorite: Favorite) = viewModelScope.launch(Dispatchers.IO) {
@@ -24,11 +23,5 @@ class FavoriteViewModal(private val repository: FavoriteRepository): ViewModel()
         repository.insert(favorite)
         allfavorites = repository.allNotes
     }
-
-    fun isRecordExists(url: String?)= viewModelScope.launch(Dispatchers.IO) {
-       isThere=repository.isRecordExists(url)
-    }
-
-
 
 }

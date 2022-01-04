@@ -18,33 +18,34 @@ abstract class FavoriteDatabase:RoomDatabase() {
         @Volatile
         private var INSTANCE:FavoriteDatabase? = null
 
-//        fun getDatabase(context: Context):FavoriteDatabase{
-//            return INSTANCE ?: synchronized(this){
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    FavoriteDatabase::class.java,
-//                    "favorite_database"
-//                ).build()
-//                INSTANCE = instance
-//                instance
+
+//        fun getInstance(context: Context):FavoriteDatabase{
+//            synchronized(this){
+//                var instance = INSTANCE
+//                if(instance==null){
+//                    instance= Room.databaseBuilder(
+//                        context.applicationContext,
+//                        FavoriteDatabase::class.java,
+//                        "favorite_database"
+//                    ).build()
+//                }
+//                Log.d("Success", "returning database instance")
+//                return instance
 //            }
-//
 //        }
 
         fun getInstance(context: Context):FavoriteDatabase{
-            synchronized(this){
-                var instance = INSTANCE
-                if(instance==null){
-                    instance= Room.databaseBuilder(
-                        context.applicationContext,
-                        FavoriteDatabase::class.java,
-                        "favorite_database"
-                    ).build()
-                }
-                Log.d("Success", "returning database instance")
-                return instance
+            return INSTANCE ?: synchronized(this){
+                var instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    FavoriteDatabase::class.java,
+                    "favorite_database"
+                ).build()
+                INSTANCE = instance
+                instance
             }
         }
+
 
     }
 }

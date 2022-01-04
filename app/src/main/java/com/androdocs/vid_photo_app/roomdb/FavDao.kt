@@ -14,9 +14,6 @@ interface FavDao {
     @Delete
     suspend fun delete(fav:Favorite)
 
-    @Query(value = "Select * from FavTable order by id ASC")
+    @Query(value = "Select * from FavTable order by url ASC")
     fun getAllNote(): LiveData<List<Favorite>>
-
-    @Query("SELECT EXISTS(SELECT * FROM FavTable WHERE url = :url)")
-    fun isRecordExists(url: String?): Boolean
 }

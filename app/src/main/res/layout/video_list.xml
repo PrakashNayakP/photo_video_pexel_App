@@ -25,7 +25,7 @@
 
 
         <ImageView
-            android:id="@+id/faviv"
+            android:id="@+id/unfav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/photo"
@@ -36,6 +36,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/favemoji" />
+
+        <ImageView
+            android:id="@+id/faviv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/photo"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/favemoji2" />
 
         <LinearLayout
             android:layout_width="match_parent"

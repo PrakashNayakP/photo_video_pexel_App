@@ -17,7 +17,7 @@ import com.androdocs.vid_photo_app.ui.detailsVideo
 import com.squareup.picasso.Picasso
 
 
-class favoriteAdapter(private val favorites: List<Favorite>) : RecyclerView.Adapter<favoriteAdapter.ViewHolder>() {
+class favoriteAdapter(private val favorites: List<Favorite>,val listner:onclickicon) : RecyclerView.Adapter<favoriteAdapter.ViewHolder>() {
 
     var lists = mutableListOf<Favorite>()
 
@@ -34,7 +34,7 @@ class favoriteAdapter(private val favorites: List<Favorite>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        return holder.bind(lists[position])
+        return holder.bind(lists[position],listner)
 
     }
 
@@ -51,16 +51,48 @@ class favoriteAdapter(private val favorites: List<Favorite>) : RecyclerView.Adap
         val fav=binding.faviv
 
 
-        fun bind(favorite: Favorite) {
+        fun bind(favorite: Favorite,listner:onclickicon) {
             Picasso.get().load(favorite.image).into(photourl);
             Picasso.get().load(favorite.image).into(photographer);
             photographername.text=favorite.name
+            val arrayList: ArrayList<String> = ArrayList()
+
+
+            click.setOnClickListener {
+                if(favorite.type){
+                    arrayList.add(favorite.url)
+                    arrayList.add(favorite.desc)
+                    arrayList.add(favorite.image)
+                    arrayList.add(favorite.name)
+                    val intent1 = Intent(click.context, detailsPhoto::class.java)
+                    intent1.putExtra("array",arrayList)
+                    click.context.startActivity(intent1)
+
+                }else{
+                    arrayList.add(favorite.image)
+                    arrayList.add(favorite.name)
+                    arrayList.add(favorite.url)
+                    val intent2 = Intent(click.context, detailsVideo::class.java)
+                    intent2.putExtra("array",arrayList)
+                    click.context.startActivity(intent2)
+                }
+
+            }
+            fav.setOnClickListener{
+            listner.onFavClick(favorite)
+            }
+
+
 
 
         }
 
 
     }
+    interface onclickicon{
+        fun onFavClick(favorite: Favorite)
+    }
+
 
 
 

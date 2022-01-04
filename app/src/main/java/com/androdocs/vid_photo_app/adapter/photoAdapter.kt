@@ -21,6 +21,12 @@ import com.androdocs.vid_photo_app.ui.detailsPhoto
 import com.androdocs.vid_photo_app.ui.detailsVideo
 import com.squareup.picasso.Picasso
 import kotlin.properties.Delegates
+import com.androdocs.vid_photo_app.models.User
+
+import android.os.AsyncTask
+
+
+
 
 
 class photoAdapter(private val photolist:List<Photo>,val listner: photoAdapter.onclickicon) : RecyclerView.Adapter<photoAdapter.ViewHolder>() {
@@ -61,11 +67,13 @@ class photoAdapter(private val photolist:List<Photo>,val listner: photoAdapter.o
             Picasso.get().load(photo.src.tiny).into(photographer);
             photographername.text=photo.photographer
 
-//            val isInDatabase=listner.isInDatabase(photo.src.large)
-//            if(isInDatabase){
-//                fav.visibility=View.GONE
-//                unfav.visibility=View.VISIBLE
-//            }
+            if(listner.isInDatabase(photo.src.large)){
+                fav.visibility=View.VISIBLE
+                unfav.visibility=View.GONE
+            }else{
+                fav.visibility=View.GONE
+                unfav.visibility=View.VISIBLE
+            }
 
             val arrayList: ArrayList<String> = ArrayList()
             arrayList.add(photo.src.large2x)

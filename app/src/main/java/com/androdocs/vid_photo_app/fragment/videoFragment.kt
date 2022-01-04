@@ -1,6 +1,7 @@
 package com.androdocs.vid_photo_app.fragment
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,12 +28,7 @@ import retrofit2.Response
 
 class videoFragment : Fragment(),videoAdapter.onclickicon {
 
-//    companion object{
-//        const val videodet="detailed video"
-//        const val videolink="link of video"
-//    }
-
-
+    private var isVideoInRoom = arrayListOf<String>()
     lateinit var viewModel: FavoriteViewModal
     private var _binding: FragmentVideoBinding? = null
 
@@ -85,15 +81,7 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
         })
     }
 
-    override fun onItemClick(video: Video) {
-
-
-//        val favoriteRepository = FavoriteRepository(FavoriteDatabase(requireContext()))
-//        val factory = FavoriteViewModalFactory(favoriteRepository)
-//        viewModel = ViewModelProvider(this, factory).get(FavoriteViewModal::class.java)
-
-
-
+    override fun onItemClick(video: Video,isFav:Boolean) {
         val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
         val repository = FavoriteRepository(dao)
         val factory = FavoriteViewModalFactory(repository)
@@ -102,10 +90,47 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
         val name:String=video.user.name
         val image:String=video.image
         val desc:String=video.user.name
-        val favorites= Favorite(link,name,true,image,desc)
-        viewModel.addFavorite(favorites)
-        Log.d("Success", "added successfully$favorites")
+        val favorites= Favorite(link,name,false,image,desc)
+        if(!isFav) {
+            viewModel.addFavorite(favorites)
+            isVideoInRoom.add(link)
+            saveArray()
+            Log.d("Success", "added successfully$isVideoInRoom")
+        }
+        else{
+            viewModel.deleteFavorite(favorites)
+            isVideoInRoom.remove(link)
+            saveArray()
+            Log.d("Success", "deleted successfully$isVideoInRoom")
+
+        }
     }
+
+    override fun isInDatabase(url: String): Boolean {
+        isVideoInRoom=getArray()
+        Log.d("checking", "$url is in array ${isVideoInRoom!!.contains(url)}")
+        return isVideoInRoom!!.contains(url)
+    }
+
+
+    fun saveArray(): Boolean {
+        val sp = this.requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+//        val sp: SharedPreferences =this.activity.getSharedPreferences("SHARED_PREFS_NAME", Activity.MODE_PRIVATE)
+        val mEdit1 = sp.edit()
+        val set: MutableSet<String> = HashSet()
+        set.addAll(isVideoInRoom)
+        mEdit1.putStringSet("list", set)
+        return mEdit1.commit()
+    }
+
+    private fun getArray(): ArrayList<String> {
+        val sp = this.requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+        //NOTE: if shared preference is null, the method return empty Hashset and not null
+        val set = sp.getStringSet("list", HashSet())
+        return ArrayList(set)
+    }
+
+
 
 
 }
