@@ -13,13 +13,13 @@ interface getApi {
 //    fun getPexelsImage(): Call<photoresponse>
 
 
-    @Headers("Authorization: 563492ad6f9170000100000199e3f6569cde4fbb9554b208b8b77359")
+    @Headers("Authorization: 563492ad6f917000010000014fd8be4b39fe44e3af264bc60da444dc")
     @GET("videos/popular")
     fun getPexelsVideo(): Call<videoresponse>
 
 
 
-    @Headers("Authorization: 563492ad6f9170000100000199e3f6569cde4fbb9554b208b8b77359")
+    @Headers("Authorization: 563492ad6f917000010000014fd8be4b39fe44e3af264bc60da444dc")
     @GET("/v1/search")
     fun getSearchImage(@Query("query")query:String): Call<photoresponse>
 

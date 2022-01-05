@@ -56,6 +56,7 @@ class favoriteAdapter(private val favorites: List<Favorite>,val listner:onclicki
             Picasso.get().load(favorite.image).into(photographer);
             photographername.text=favorite.name
             val arrayList: ArrayList<String> = ArrayList()
+            val isTrue="true"
 
 
             click.setOnClickListener {
@@ -64,6 +65,7 @@ class favoriteAdapter(private val favorites: List<Favorite>,val listner:onclicki
                     arrayList.add(favorite.desc)
                     arrayList.add(favorite.image)
                     arrayList.add(favorite.name)
+                    arrayList.add(isTrue)
                     val intent1 = Intent(click.context, detailsPhoto::class.java)
                     intent1.putExtra("array",arrayList)
                     click.context.startActivity(intent1)
@@ -72,6 +74,7 @@ class favoriteAdapter(private val favorites: List<Favorite>,val listner:onclicki
                     arrayList.add(favorite.image)
                     arrayList.add(favorite.name)
                     arrayList.add(favorite.url)
+                    arrayList.add(isTrue)
                     val intent2 = Intent(click.context, detailsVideo::class.java)
                     intent2.putExtra("array",arrayList)
                     click.context.startActivity(intent2)

@@ -24,9 +24,7 @@ import kotlin.properties.Delegates
 import com.androdocs.vid_photo_app.models.User
 
 import android.os.AsyncTask
-
-
-
+import com.androdocs.vid_photo_app.fragment.photoFragment
 
 
 class photoAdapter(private val photolist:List<Photo>,val listner: photoAdapter.onclickicon) : RecyclerView.Adapter<photoAdapter.ViewHolder>() {
@@ -67,44 +65,63 @@ class photoAdapter(private val photolist:List<Photo>,val listner: photoAdapter.o
             Picasso.get().load(photo.src.tiny).into(photographer);
             photographername.text=photo.photographer
 
+            var isFav: Boolean
+
+
+
+            // while loading
             if(listner.isInDatabase(photo.src.large)){
                 fav.visibility=View.VISIBLE
                 unfav.visibility=View.GONE
             }else{
+
                 fav.visibility=View.GONE
                 unfav.visibility=View.VISIBLE
             }
 
-            val arrayList: ArrayList<String> = ArrayList()
-            arrayList.add(photo.src.large2x)
-            arrayList.add(photo.alt)
-            arrayList.add(photo.src.tiny)
-            arrayList.add(photo.photographer)
-            val intent = Intent(click.context, detailsPhoto::class.java)
 
-            //when clicks on a particular photo
-            click.setOnClickListener {
-                intent.putExtra("array",arrayList)
-                click.context.startActivity(intent)
-            }
+
 
             //when user adds to the favorite list
-            var isFav: Boolean
+
             unfav.setOnClickListener {
-                  isFav=false
+                isFav=false
                 listner.onItemClick(photo,isFav)
 
                 unfav.visibility=View.GONE
                 fav.visibility=View.VISIBLE
             }
 
-                //when he unchecks the heart
+            //when he unchecks the heart
             fav.setOnClickListener{
                 isFav=true
                 listner.onItemClick(photo,isFav)
                 fav.visibility=View.GONE
                 unfav.visibility=View.VISIBLE
             }
+
+
+            val intent = Intent(click.context, detailsPhoto::class.java)
+
+            //when clicks on a particular photo
+            click.setOnClickListener {
+                val arrayList: ArrayList<String> = ArrayList()
+                arrayList.add(photo.src.large)
+                arrayList.add(photo.alt)
+                arrayList.add(photo.src.landscape)
+                arrayList.add(photo.photographer)
+                if(listner.isInDatabase(photo.src.large)){
+                    val isTrue="true"
+                    arrayList.add(isTrue)
+                }else{
+                    arrayList.add("false")
+                }
+
+                intent.putExtra("array",arrayList)
+                click.context.startActivity(intent)
+            }
+
+
 
 
 
@@ -117,7 +134,7 @@ class photoAdapter(private val photolist:List<Photo>,val listner: photoAdapter.o
 
 
     interface onclickicon{
-        fun onItemClick(photo: Photo,isFav:Boolean)
+        fun onItemClick(photo:Photo,isFav:Boolean)
         fun isInDatabase(url:String):Boolean
     }
 

@@ -46,24 +46,13 @@ class videoAdapter(private  val videolist:List<Video>,val listner:onclickicon):R
             Picasso.get().load(video.image).into(photographer);
             photographername.text=video.user.name
 
+            //while loading
             if(listner.isInDatabase(video.video_files[1].link)){
-                Log.d("if", "indatabase")
                 fav.visibility=View.VISIBLE
                 unfav.visibility=View.GONE
             }else{
                 fav.visibility=View.GONE
                 unfav.visibility=View.VISIBLE
-            }
-
-            val arrayList: ArrayList<String> = ArrayList()
-            arrayList.add(video.image)
-//            arrayList.add(video.user.url)
-            arrayList.add(video.user.name)
-            arrayList.add(video.video_files[1].link)
-            val intent = Intent(click.context, detailsVideo::class.java)
-            click.setOnClickListener {
-                intent.putExtra("array",arrayList)
-                click.context.startActivity(intent)
             }
 
             //when user adds to the favorite list
@@ -83,6 +72,25 @@ class videoAdapter(private  val videolist:List<Video>,val listner:onclickicon):R
                 fav.visibility= View.GONE
                 unfav.visibility= View.VISIBLE
             }
+
+
+
+            val intent = Intent(click.context, detailsVideo::class.java)
+            click.setOnClickListener {
+                val arrayList: ArrayList<String> = ArrayList()
+                arrayList.add(video.image)
+                arrayList.add(video.user.name)
+                arrayList.add(video.video_files[1].link)
+                if(listner.isInDatabase(video.video_files[1].link)){
+                    val isTrue="true"
+                    arrayList.add(isTrue)
+                }else{
+                    arrayList.add("false")
+                }
+                intent.putExtra("array",arrayList)
+                click.context.startActivity(intent)
+            }
+
 
 
 

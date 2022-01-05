@@ -2,13 +2,18 @@ package com.androdocs.vid_photo_app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.ViewModelProvider
 import com.androdocs.vid_photo_app.databinding.ActivityDetailsPhotoBinding
 import com.squareup.picasso.Picasso
 import com.androdocs.vid_photo_app.R
+import com.androdocs.vid_photo_app.adapter.photoAdapter
+import com.androdocs.vid_photo_app.roomdb.*
 
 
-class detailsPhoto : AppCompatActivity() {
+class detailsPhoto() : AppCompatActivity() {
 
     //creating variable for binding
     private lateinit var binding:ActivityDetailsPhotoBinding
@@ -27,8 +32,22 @@ class detailsPhoto : AppCompatActivity() {
         supportActionBar?.hide()
 
 
+        val unfav=binding.unfav
+        val fav=binding.faviv
+
+
         val image = intent.getStringArrayListExtra("array")
         Picasso.get().load(image!![0]).into(binding.detailiv)
+
+        if(image[4]=="true"){
+            fav.visibility= View.VISIBLE
+            unfav.visibility= View.GONE
+        }else{
+            fav.visibility= View.GONE
+            unfav.visibility= View.VISIBLE
+        }
+
+
 
         val toolbar=binding.toolbar
         toolbar.setNavigationIcon(R.drawable.back)
@@ -39,6 +58,40 @@ class detailsPhoto : AppCompatActivity() {
         binding.photoDet.text=image[1]
         Picasso.get().load(image[2]).into(binding.photographer)
         binding.photographername.text=image[3]
+
+//        val dao = FavoriteDatabase.getInstance(this).getFavoritesDao
+//        val repository = FavoriteRepository(dao)
+//        val factory = FavoriteViewModalFactory(repository)
+//        val viewModel = ViewModelProvider(this,factory).get(FavoriteViewModal::class.java)
+//
+//
+//
+//        val link:String=image[0]
+//        val name: String = image[3]
+//        val img: String = image[2]
+//        val desc: String = image[1]
+//        val favorites = Favorite(link, name, true, img, desc)
+//
+//
+//        unfav.setOnClickListener {
+//            viewModel.addFavorite(favorites)
+////            isInRoom.add(link)
+////            val isSaved=saveArray()
+////            Log.d("Saved:$isSaved", "added successfully$isInRoom"))
+//            unfav.visibility=View.GONE
+//            fav.visibility=View.VISIBLE
+//        }
+//
+//        //when he unchecks the heart
+//        fav.setOnClickListener{
+//            viewModel.deleteFavorite(favorites)
+////            isInRoom.remove(link)
+////            val isSaved=saveArray()
+////            Log.d("Saved:$isSaved", "deleted successfully$isInRoom")
+//            fav.visibility=View.GONE
+//            unfav.visibility=View.VISIBLE
+//        }
+
 
 
         binding.zoomin.setOnClickListener{
@@ -58,7 +111,6 @@ class detailsPhoto : AppCompatActivity() {
             // the image and start animation
             binding.detailiv.startAnimation(animZoomOut)
         }
-
 
 
 

@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.MediaController
 import android.widget.SeekBar
 import android.widget.Toast
@@ -58,6 +59,20 @@ class detailsVideo : AppCompatActivity() {
         binding.videoDet.text = video!![1]
         Picasso.get().load(video[0]).into(binding.photographer)
         binding.photographername.text=video!![1]
+
+
+        val unfav=binding.unfav
+        val fav=binding.faviv
+
+        if(video[3]=="true"){
+            fav.visibility= View.VISIBLE
+            unfav.visibility= View.GONE
+        }else{
+            fav.visibility= View.GONE
+            unfav.visibility= View.VISIBLE
+        }
+
+
 
 //        controlVideo(video[3])
 

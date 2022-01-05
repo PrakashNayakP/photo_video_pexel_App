@@ -108,7 +108,7 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
     }
 
 
-    override fun onItemClick(photo: Photo,isFav:Boolean) {
+    override fun onItemClick(photo:Photo,isFav:Boolean) {
 
         val dao = FavoriteDatabase.getInstance(this.requireContext()).getFavoritesDao
         val repository = FavoriteRepository(dao)
@@ -118,6 +118,10 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
             val name: String = photo.photographer
             val image: String = photo.src.landscape
             val desc: String = photo.alt
+//        val link:String=arrayList[0]
+//        val name: String = arrayList[3]
+//        val image: String = arrayList[2]
+//        val desc: String = arrayList[1]
             val favorites = Favorite(link, name, true, image, desc)
         if(!isFav) {
             viewModel.addFavorite(favorites)
