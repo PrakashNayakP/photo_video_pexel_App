@@ -17,97 +17,92 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/group" />
+        app:layout_constraintTop_toBottomOf="@id/linear_layout" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:background="@drawable/details_photo_toolbar"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
         />
 
+   <LinearLayout
+       android:id="@+id/linear_layout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignBottom="@id/toolbar"
+       android:orientation="horizontal"
+       android:background="@drawable/image_details_header"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/toolbar"
+       >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/group"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@drawable/image_details_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+
+
+       <com.google.android.material.imageview.ShapeableImageView
+           android:id="@+id/photographer"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="10dp"
+           android:adjustViewBounds="true"
+           android:padding="2dp"
+           android:scaleType="centerCrop"
+           android:src="@drawable/dummy_image"
+           app:shapeAppearanceOverlay="@style/roundedImage"
+           app:strokeColor="@color/white"
+           app:strokeWidth="3dp" />
+
+       <TextView
+           android:id="@+id/photographername"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginStart="8dp"
+           android:layout_marginTop="8dp"
+           android:layout_marginEnd="8dp"
+           android:layout_marginBottom="8dp"
+           android:text="ashley_graham"
+           android:textColor="@color/white"
+           android:textSize="20sp" />
+
+   </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/unfav"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:foregroundGravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/favemoji" />
 
+    <ImageView
+        android:id="@+id/faviv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        android:foregroundGravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/favemoji2" />
 
-        <ImageView
-            android:id="@+id/photographer"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="start|bottom"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/circle"
-            android:paddingLeft="6dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@id/group"
-
-            app:layout_constraintEnd_toStartOf="@+id/photographername"
-            app:layout_constraintHorizontal_bias="0.328"
-            app:layout_constraintStart_toStartOf="@id/group"
-            app:layout_constraintTop_toTopOf="@id/group"
-            app:layout_constraintVertical_bias="0.489" />
-
-        <TextView
-            android:id="@+id/photographername"
-            android:layout_width="250dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="52dp"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@id/group"
-            app:layout_constraintEnd_toStartOf="@id/faviv"
-            app:layout_constraintTop_toTopOf="@id/group"
-            app:layout_constraintVertical_bias="0.491"
-            tools:text="This is the title" />
-
-        <ImageView
-            android:id="@+id/unfav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/group"
-            app:layout_constraintEnd_toEndOf="@id/group"
-            app:layout_constraintTop_toTopOf="@+id/group"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/favemoji" />
-
-        <ImageView
-            android:id="@+id/faviv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/group"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/group"
-            app:layout_constraintTop_toTopOf="@+id/group"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/favemoji2" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/video_det"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Image title"
+        android:gravity="center_vertical"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
