@@ -61,11 +61,6 @@ class videoFragment : Fragment(),videoAdapter.onclickicon {
                         adapter = videoAdapter(videoresponse.videos,this@videoFragment)
                         binding.emptyView.visibility=View.GONE
 
-//                        {
-//                            val intent = Intent (getActivity(), detailsVideo::class.java)
-//                            intent.putExtra(videodet,it)
-//                            getActivity()?.startActivity(intent)
-//                        }
                     }
                 }
                 else{
