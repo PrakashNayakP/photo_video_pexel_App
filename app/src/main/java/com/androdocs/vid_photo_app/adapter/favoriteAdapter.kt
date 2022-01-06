@@ -81,6 +81,7 @@ class favoriteAdapter(private val favorites: List<Favorite>,val listner:onclicki
                 }
 
             }
+
             fav.setOnClickListener{
             listner.onFavClick(favorite)
             }

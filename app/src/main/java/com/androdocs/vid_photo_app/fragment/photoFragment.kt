@@ -166,4 +166,7 @@ class photoFragment(private val query:String) : Fragment(), photoAdapter.onclick
 
 
 
+
+
+
 }

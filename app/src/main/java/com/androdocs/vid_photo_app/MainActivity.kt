@@ -2,6 +2,7 @@ package com.androdocs.vid_photo_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
@@ -62,6 +63,20 @@ class MainActivity : AppCompatActivity(){
 
             }.attach()
         }
+
+
+        for (i in 0 until binding.tablayout.tabCount) {
+            val tab = (binding.tablayout.getChildAt(0) as ViewGroup).getChildAt(i)
+            val p = tab.layoutParams as ViewGroup.MarginLayoutParams
+            if (i == 1) {
+            p.setMargins(0, 0, 220, 0)
+            } else {
+            p.setMargins(0, 0, 10, 0)
+            }
+        }
+
+
+
 
        setQuery("popular");
 

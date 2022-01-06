@@ -35,7 +35,7 @@
        android:layout_height="wrap_content"
        android:layout_alignBottom="@id/toolbar"
        android:orientation="horizontal"
-       android:background="@drawable/image_details_header"
+       android:background="@drawable/video_details_header"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toBottomOf="@+id/toolbar"
        >
